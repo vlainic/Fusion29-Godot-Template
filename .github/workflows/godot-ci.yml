@@ -1,0 +1,159 @@
+name: Godot CI/CD Pipeline
+
+# Only runs on push to the `prod` branch.
+# workflow_dispatch lets you trigger it manually from the GitHub Actions UI
+# without needing to push a commit.
+on:
+  push:
+    branches:
+      - prod
+  workflow_dispatch:
+
+env:
+  # Read from GitHub repo variable (Settings -> Variables -> Actions).
+  GODOT_VERSION: ${{ vars.GODOT_VERSION }}
+  GODOT_STATUS: "stable"
+
+jobs:
+  # Job 1: import all assets and cache the results.
+  import-assets:
+    runs-on: ubuntu-latest
+    container: barichello/godot-ci:${{ vars.GODOT_VERSION }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache import assets
+        uses: actions/cache@v3
+        with:
+          path: .godot/imported/
+          key: import-assets-${{ runner.os }}-${{ github.sha }}
+
+      - name: Import assets
+        run: godot --headless --verbose --editor --quit
+
+  # Job 2: export all platforms as archives.
+  export-game:
+    runs-on: ubuntu-latest
+    needs: import-assets
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/cache@v3
+        with:
+          path: .godot/imported/
+          key: import-assets-${{ runner.os }}-${{ github.sha }}
+
+      - name: Generate version.txt
+        run: |
+          git rev-list --count HEAD > version.txt
+          echo "BUILD $(cat version.txt)"
+
+      # Wine is required for Windows export on Linux runner.
+      - name: Install wine
+        run: |
+          sudo apt install wine64
+          echo "WINE_PATH=$(which wine64)" >> $GITHUB_ENV
+
+      - name: Export Game using Godot
+        uses: firebelley/godot-export@v5.2.1
+        with:
+          godot_executable_download_url: "https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-${{ env.GODOT_STATUS }}/Godot_v${{ env.GODOT_VERSION }}-${{ env.GODOT_STATUS }}_linux.x86_64.zip"
+          godot_export_templates_download_url: "https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-${{ env.GODOT_STATUS }}/Godot_v${{ env.GODOT_VERSION }}-${{ env.GODOT_STATUS }}_export_templates.tpz"
+          relative_project_path: "."
+          archive_output: true
+          cache: false
+          wine_path: ${{ env.WINE_PATH }}
+
+      - name: Upload HTML5
+        uses: actions/upload-artifact@v4
+        with:
+          name: HTML5
+          path: /home/runner/.local/share/godot/archives/HTML5.zip
+
+      - name: Upload Linux
+        uses: actions/upload-artifact@v4
+        with:
+          name: LinuxX11
+          path: /home/runner/.local/share/godot/archives/LinuxX11.zip
+
+      - name: Upload Windows
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows
+          path: /home/runner/.local/share/godot/archives/Windows.zip
+
+      - name: Upload macOS
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS
+          path: /home/runner/.local/share/godot/archives/macOS.zip
+
+  # Jobs 3-6: deploy each platform artifact to itch.io.
+  deploy-to-itchio-linux:
+    runs-on: ubuntu-latest
+    needs: export-game
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: LinuxX11
+      - name: Deploy to Itch.io (Linux)
+        uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: linux
+          ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: LinuxX11.zip
+
+  deploy-to-itchio-windows:
+    runs-on: ubuntu-latest
+    needs: export-game
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: Windows
+      - name: Deploy to Itch.io (Windows)
+        uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: windows
+          ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: Windows.zip
+
+  deploy-to-itchio-mac:
+    runs-on: ubuntu-latest
+    needs: export-game
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: macOS
+      - name: Deploy to Itch.io (macOS)
+        uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: mac
+          ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: macOS.zip
+
+  deploy-to-itchio-web:
+    runs-on: ubuntu-latest
+    needs: export-game
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: HTML5
+      - name: Deploy to Itch.io (HTML5)
+        uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          # Must be html5, not web.
+          CHANNEL: html5
+          ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: HTML5.zip

@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://jljc733whdom" path="res://scenes/credits/credits_label.tscn" id="2_cxj1u"]
 
 [node name="ScrollingCredits" type="Control" unique_id=511164747]
-editor_description = "Credits body is the instanced CreditsLabel from credits_label.tscn (loaded from res://ATTRIBUTION.md in game). Same copy as there, including: Placeholder for borrowed assets :)"
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,6 +32,25 @@ layout_mode = 2
 [node name="CreditsLabel" parent="ScrollContainer/VBoxContainer" unique_id=962973358 instance=ExtResource("2_cxj1u")]
 unique_name_in_owner = true
 layout_mode = 2
+text = "[font_size=32]Thank You To:[/font_size]
+
+Placeholder for borrowed assets :)
+
+[font_size=32][url=https://fusion29dev.itch.io/]Fusion 29[/url][/font_size]
+[img=80]res:///assets/plugin_logo/logo.png[/img]
+
+[font_size=24]Game Developer[/font_size]
+[url=https://www.linkedin.com/in/milos-vlainic-ns/]Miloš Vlainić[/url]
+
+[font_size=24]Illustrator[/font_size]
+Ljubomir Debeljački
+
+[font_size=24]Game Designer[/font_size]
+Miloš Jocić
+
+[font_size=24]Composer[/font_size]
+Svetozar Nešić
+"
 
 [node name="FooterSpace" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=1964751991]
 unique_name_in_owner = true

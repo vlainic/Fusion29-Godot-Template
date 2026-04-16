@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://jljc733whdom" path="res://scenes/credits/credits_label.tscn" id="2_cxj1u"]
 
 [node name="ScrollingCredits" type="Control" unique_id=511164747]
+editor_description = "Credits body is the instanced CreditsLabel from credits_label.tscn (loaded from res://ATTRIBUTION.md in game). Same copy as there, including: Placeholder for borrowed assets :)"
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

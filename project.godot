@@ -38,10 +38,10 @@ enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg", "res:
 
 folder_colors={
 "res://addons/": "red",
-"res://scenes/": "green",
-"res://scripts/": "orange",
+"res://assets/": "yellow",
 "res://resources/": "blue",
-"res://assets/": "yellow"
+"res://scenes/": "green",
+"res://scripts/": "orange"
 }
 
 [gui]

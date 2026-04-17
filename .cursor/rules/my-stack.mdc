@@ -1,0 +1,10 @@
+---
+description: if making larger code changes
+globs: 
+alwaysApply: false
+---
+# Technical stack
+
+- Snowflake as database
+- Python libs: numpy, pandas, networkx
+- Package manager: uv

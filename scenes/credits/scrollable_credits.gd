@@ -9,11 +9,22 @@ var _line_number : float = 0
 
 func _on_visibility_changed() -> void:
 	if visible:
+		_sync_credits_width()
 		credits_label.scroll_to_line(0)
 		credits_label.grab_focus()
 
+func _sync_credits_width() -> void:
+	credits_label.custom_minimum_size.x = size.x
+
+func _on_resized() -> void:
+	_sync_credits_width()
+
 func _ready() -> void:
+	credits_label.focus_mode = Control.FOCUS_ALL
 	visibility_changed.connect(_on_visibility_changed)
+	resized.connect(_on_resized)
+	_sync_credits_width()
+	call_deferred("_sync_credits_width")
 
 func _process(delta : float) -> void:
 	if Engine.is_editor_hint() or not visible:

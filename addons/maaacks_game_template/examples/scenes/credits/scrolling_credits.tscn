@@ -26,7 +26,7 @@ size_flags_horizontal = 3
 
 [node name="HeaderSpace" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=1552560353]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 720)
+custom_minimum_size = Vector2(0, 1080)
 layout_mode = 2
 
 [node name="CreditsLabel" parent="ScrollContainer/VBoxContainer" unique_id=1486745388 instance=ExtResource("3_fbdex")]
@@ -35,5 +35,5 @@ layout_mode = 2
 
 [node name="FooterSpace" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=1703782196]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 720)
+custom_minimum_size = Vector2(0, 1080)
 layout_mode = 2

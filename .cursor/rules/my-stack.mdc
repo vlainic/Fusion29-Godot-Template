@@ -1,10 +1,12 @@
 ---
-description: if making larger code changes
-globs: 
+description: Godot project stack; apply when making larger game or engine changes.
+globs: "**/*.gd"
 alwaysApply: false
 ---
 # Technical stack
 
-- Snowflake as database
-- Python libs: numpy, pandas, networkx
-- Package manager: uv
+- **Engine:** Godot 4.x (this repo targets **4.6**; see `project.godot` `config/features`).
+- **Language:** GDScript 2.
+- **Template / addons:** `addons/maaacks_game_template/`, `addons/ggt-core/`, `addons/ggt-debug-shortcuts/` (enabled plugins and autoloads such as `SceneLoader`, `GGT`, `AppConfig`, audio/UI controllers per `project.godot`).
+- **Project code:** `scenes/`, `scripts/` — prefer new behavior and forks of template flows here rather than editing addon sources unless fixing a bug or updating the template intentionally.
+- **Testing:** No bundled unit-test addon; use focused test scenes/scripts under `res://tests/` or adopt **GdUnit4** / **GUT** if you add one (see `.cursor/agents/test-writer.md`).

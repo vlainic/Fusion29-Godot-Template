@@ -7,7 +7,7 @@ For Godot 4.6 (4.3+ compatible)
 
 This template has a main menu, options menus, pause menu, credits, scene loader, extra tools, and an example game scene.  
 
-I adjusted this for our games from here [Godot Game Template](https://github.com/Maaack/Godot-Game-Template) - thanks Maaack :)
+**This is just adjustment for our games from here [Godot Game Template](https://github.com/Maaack/Godot-Game-Template) - thanks Maaack :)**
 
 > [!NOTE]
 > Upstream is MIT; see LICENSE.txt

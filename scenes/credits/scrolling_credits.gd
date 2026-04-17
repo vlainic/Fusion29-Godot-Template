@@ -77,6 +77,7 @@ func _ready() -> void:
 	visibility_changed.connect(_on_visibility_changed)
 	timer.timeout.connect(_on_scroll_restart_timer_timeout)
 	set_header_and_footer()
+	call_deferred("set_header_and_footer")
 	add_child(timer)
 	scroll_paused = false
 

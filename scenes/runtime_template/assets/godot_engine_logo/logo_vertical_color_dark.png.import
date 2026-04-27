@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cxodj5plfb52k"
-path="res://.godot/imported/logo_vertical_color_dark.png-914a689b7551193a70a010921088ebb7.ctex"
+path="res://.godot/imported/logo_vertical_color_dark.png-efb736f51da7e64bf683e7d47c45f44c.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://scenes/runtime_template/assets/godot_engine_logo/logo_vertical_color_dark.png"
-dest_files=["res://.godot/imported/logo_vertical_color_dark.png-914a689b7551193a70a010921088ebb7.ctex"]
+dest_files=["res://.godot/imported/logo_vertical_color_dark.png-efb736f51da7e64bf683e7d47c45f44c.ctex"]
 
 [params]
 

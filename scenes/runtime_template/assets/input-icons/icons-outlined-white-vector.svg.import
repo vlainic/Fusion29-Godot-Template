@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1lpc33fpmd4p"
-path="res://.godot/imported/icons-outlined-white-vector.svg-13bd95bd8aface9a8bed6895685dd4ef.ctex"
+path="res://.godot/imported/icons-outlined-white-vector.svg-3267914b4ecdbb6d15762b54e404b7d1.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://scenes/runtime_template/assets/input-icons/icons-outlined-white-vector.svg"
-dest_files=["res://.godot/imported/icons-outlined-white-vector.svg-13bd95bd8aface9a8bed6895685dd4ef.ctex"]
+dest_files=["res://.godot/imported/icons-outlined-white-vector.svg-3267914b4ecdbb6d15762b54e404b7d1.ctex"]
 
 [params]
 

@@ -130,8 +130,6 @@ ggt_debug_step_frame={
 ]
 }
 
-[internationalization]
-
 [physics]
 
 common/enable_pause_aware_picking=true

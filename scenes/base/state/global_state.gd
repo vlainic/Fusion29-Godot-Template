@@ -3,6 +3,8 @@ extends Node
 
 const SAVE_STATE_PATH = "user://global_state.tres"
 const NO_VERSION_NAME = "0.0.0"
+const LEGACY_STATE_SCRIPT_PATH = "res://scenes/runtime_template/base/nodes/state/global_state_data.gd"
+const CURRENT_STATE_SCRIPT_PATH = "res://scenes/base/state/global_state_data.gd"
 
 static var current : GlobalStateData
 static var current_version : String
@@ -28,8 +30,26 @@ static func _log_version() -> void:
 static func _load_current_state() -> void:
 	if FileAccess.file_exists(SAVE_STATE_PATH):
 		current = ResourceLoader.load(SAVE_STATE_PATH)
+		if not current:
+			_migrate_legacy_save_and_retry()
 	if not current:
 		current = GlobalStateData.new()
+
+static func _migrate_legacy_save_and_retry() -> void:
+	var file := FileAccess.open(SAVE_STATE_PATH, FileAccess.READ)
+	if file == null:
+		return
+	var contents := file.get_as_text()
+	file.close()
+	if not contents.contains(LEGACY_STATE_SCRIPT_PATH):
+		return
+	contents = contents.replace(LEGACY_STATE_SCRIPT_PATH, CURRENT_STATE_SCRIPT_PATH)
+	file = FileAccess.open(SAVE_STATE_PATH, FileAccess.WRITE)
+	if file == null:
+		return
+	file.store_string(contents)
+	file.close()
+	current = ResourceLoader.load(SAVE_STATE_PATH)
 
 static func open() -> void:
 	_load_current_state()

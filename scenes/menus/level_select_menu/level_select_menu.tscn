@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bgrtey1hosj1b" path="res://scenes/menus/level_select_menu/level_select_menu.gd" id="1_a0tqu"]
 [ext_resource type="Script" uid="uid://1nf36h0gms3q" path="res://scenes/base/utilities/capture_focus.gd" id="2_tjb7s"]
-[ext_resource type="Script" uid="uid://wjq7li836lwj" path="res://scripts/runtime/scene_lister.gd" id="3_le4jx"]
+[ext_resource type="Script" uid="uid://cojurhmg50djd" path="res://scripts/runtime/scene_lister.gd" id="3_le4jx"]
 
 [node name="LevelSelectMenu" type="Control" unique_id=688960495]
 layout_mode = 3

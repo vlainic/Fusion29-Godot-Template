@@ -20,10 +20,10 @@ extends Node
 @export var auto_load : bool = true
 @export_group("Scenes")
 ## Path to a main menu scene.
-## Will attempt to read from AppConfig if left empty.
+## Will attempt to read from GameConfig if left empty.
 @export_file("*.tscn") var main_menu_scene_path : String
 ## Optional path to an ending scene.
-## Will attempt to read from AppConfig if left empty
+## Will attempt to read from GameConfig if left empty
 @export_file("*.tscn") var ending_scene_path : String
 ## Optional screen to be shown after the game is won.
 @export var game_won_scene : PackedScene
@@ -52,11 +52,11 @@ func _try_connecting_signal_to_level(signal_name : String, callable : Callable) 
 
 func get_main_menu_scene_path() -> String:
 	if main_menu_scene_path.is_empty():
-		return AppConfig.main_menu_scene_path
+		return GameConfig.main_menu_scene_path
 	return main_menu_scene_path
 
 func _load_main_menu() -> void:
-	SceneLoader.load_scene(get_main_menu_scene_path())
+	get_tree().change_scene_to_file(get_main_menu_scene_path())
 
 func _find_in_scene_lister(level_path : String) -> int:
 	if not scene_lister: return -1
@@ -83,12 +83,12 @@ func get_prev_level_path() -> String:
 
 func get_ending_scene_path() -> String:
 	if ending_scene_path.is_empty():
-		return AppConfig.ending_scene_path
+		return GameConfig.ending_scene_path
 	return ending_scene_path
 
 func _load_ending() -> void:
 	if not get_ending_scene_path().is_empty():
-		SceneLoader.load_scene(get_ending_scene_path())
+		get_tree().change_scene_to_file(get_ending_scene_path())
 	else:
 		_load_main_menu()
 

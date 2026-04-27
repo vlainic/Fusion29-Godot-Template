@@ -164,9 +164,8 @@ func _delete_directory_recursive(dir_path : String) -> void:
 	if dir:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
-		var error : Error
+		var error : Error = OK
 		while file_name != "" and error == 0:
-			var relative_path = dir_path.trim_prefix(get_plugin_examples_path())
 			var full_file_path = dir_path + file_name
 			if dir.current_is_dir():
 				_delete_directory_recursive(full_file_path)
@@ -234,12 +233,12 @@ func _add_translations() -> void:
 			translations.append(translation_path)
 	ProjectSettings.set_setting("internationalization/locale/translations", translations)
 
-func _is_app_config_path_updated(target_path) -> bool:
+func _is_app_config_path_updated(_target_path) -> bool:
 	var file_text : String = FileAccess.get_file_as_string(get_app_config_path())
 	var target_string = "main_menu_scene_path = \"" + get_plugin_examples_path()
 	return !file_text.contains(target_string)
 
-func _is_scene_loader_path_updated(target_path) -> bool:
+func _is_scene_loader_path_updated(_target_path) -> bool:
 	var file_text : String = FileAccess.get_file_as_string(get_scene_loader_path())
 	var target_string = "loading_screen_path = \"" + get_plugin_examples_path()
 	return !file_text.contains(target_string)
@@ -367,14 +366,10 @@ func _remove_tool_options() -> void:
 	_remove_update_plugin_tool_option()
 
 func _enable_plugin():
-	add_autoload_singleton("AppConfig", get_app_config_path())
-	add_autoload_singleton("SceneLoader", get_scene_loader_path())
 	add_autoload_singleton("ProjectMusicController", get_plugin_path() + "base/nodes/autoloads/music_controller/project_music_controller.tscn")
 	add_autoload_singleton("ProjectUISoundController", get_plugin_path() + "base/nodes/autoloads/ui_sound_controller/project_ui_sound_controller.tscn")
 
 func _disable_plugin():
-	remove_autoload_singleton("AppConfig")
-	remove_autoload_singleton("SceneLoader")
 	remove_autoload_singleton("ProjectMusicController")
 	remove_autoload_singleton("ProjectUISoundController")
 

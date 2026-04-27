@@ -53,9 +53,8 @@ func _get_seconds_waiting() -> int:
 	return int((Time.get_ticks_msec() - _loading_start_time) / 1000.0)
 
 func _update_scene_loading_progress() -> void:
-	var new_progress = SceneLoader.get_progress()
-	if new_progress > _scene_loading_progress:
-		_scene_loading_progress = new_progress
+	if _scene_loading_progress < 1.0:
+		_scene_loading_progress = 1.0
 
 func _set_scene_loading_complete() -> void:
 	_scene_loading_progress = 1.0
@@ -119,21 +118,10 @@ func _update_progress_messaging() -> void:
 		_hide_popups()
 
 func _process(_delta : float) -> void:
-	var status = SceneLoader.get_status()
-	match(status):
-		ResourceLoader.THREAD_LOAD_IN_PROGRESS:
-			_update_scene_loading_progress()
-			_update_progress_messaging()
-		ResourceLoader.THREAD_LOAD_LOADED:
-			_set_scene_loading_complete()
-			_update_progress_messaging()
-		ResourceLoader.THREAD_LOAD_FAILED:
-			%ErrorMessage.dialog_text = "Loading Error: %d" % status
-			%ErrorMessage.popup()
-			set_process(false)
-		ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
-			_hide_popups()
-			set_process(false)
+	if not _scene_loading_complete:
+		_update_scene_loading_progress()
+		_set_scene_loading_complete()
+	_update_progress_messaging()
 
 func _on_loading_timer_timeout() -> void:
 	var prev_stage : StallStage = _stall_stage

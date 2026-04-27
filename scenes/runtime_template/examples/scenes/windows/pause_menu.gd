@@ -3,7 +3,7 @@ extends OverlaidWindow
 
 @export var options_menu_scene : PackedScene
 ## Path to a main menu scene.
-## Will attempt to read from AppConfig if left empty.
+## Will attempt to read from GameConfig if left empty.
 @export_file("*.tscn") var main_menu_scene_path : String
 @export_node_path(&"ConfirmationOverlaidWindow") var restart_confirmation_node_path : NodePath
 @export_node_path(&"ConfirmationOverlaidWindow") var main_menu_confirmation_node_path : NodePath
@@ -23,7 +23,7 @@ var _ignore_first_cancel : bool = false
 
 func get_main_menu_scene_path() -> String:
 	if main_menu_scene_path.is_empty():
-		return AppConfig.main_menu_scene_path
+		return GameConfig.main_menu_scene_path
 	return main_menu_scene_path
 
 func close_window() -> void:
@@ -46,7 +46,7 @@ func _enable_focus() -> void:
 
 func _load_scene(scene_path: String) -> void:
 	_scene_tree.paused = false
-	SceneLoader.load_scene(scene_path)
+	_scene_tree.change_scene_to_file(scene_path)
 
 func _show_window(window : Control) -> void:
 	_disable_focus.call_deferred()
@@ -107,7 +107,7 @@ func _on_exit_button_pressed() -> void:
 	_show_window(exit_confirmation)
 
 func _on_restart_confirmation_confirmed() -> void:
-	SceneLoader.reload_current_scene()
+	_scene_tree.reload_current_scene()
 	close()
 
 func _on_main_menu_confirmation_confirmed():

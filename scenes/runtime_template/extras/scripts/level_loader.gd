@@ -31,13 +31,18 @@ func load_level(level_path : String):
 		current_level = null
 	current_level_path = level_path
 	is_loading = true
-	SceneLoader.load_scene(current_level_path, true)
 	if level_loading_screen:
 		level_loading_screen.reset()
 	level_load_started.emit()
-	await SceneLoader.scene_loaded
+	var level_resource := load(current_level_path)
+	if level_resource == null:
+		push_error("Failed to load level: %s" % current_level_path)
+		is_loading = false
+		if level_loading_screen:
+			level_loading_screen.close()
+		return
 	is_loading = false
-	current_level = _attach_level(SceneLoader.get_resource())
+	current_level = _attach_level(level_resource)
 	if level_loading_screen:
 		level_loading_screen.close()
 	level_loaded.emit()

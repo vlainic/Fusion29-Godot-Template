@@ -2,7 +2,7 @@
 extends "res://scenes/runtime_template/examples/scenes/credits/scrolling_credits.gd"
 
 ## Defines the path to the main menu. Hides the Main Menu button if not set.
-## Will attempt to read from AppConfig if left empty.
+## Will attempt to read from GameConfig if left empty.
 @export_file("*.tscn") var main_menu_scene_path : String
 ## This option forces the mouse to be visible when the menu shows up.
 ## Useful for games that capture the mouse, and don't automatically return it.
@@ -15,7 +15,7 @@ extends "res://scenes/runtime_template/examples/scenes/credits/scrolling_credits
 
 func get_main_menu_scene_path() -> String:
 	if main_menu_scene_path.is_empty():
-		return AppConfig.main_menu_scene_path
+		return GameConfig.main_menu_scene_path
 	return main_menu_scene_path
 
 func _end_reached() -> void:
@@ -26,7 +26,7 @@ func _end_reached() -> void:
 	super._end_reached()
 
 func load_main_menu() -> void:
-	SceneLoader.load_scene(get_main_menu_scene_path())
+	get_tree().change_scene_to_file(get_main_menu_scene_path())
 
 func exit_game() -> void:
 	if OS.has_feature("web"):

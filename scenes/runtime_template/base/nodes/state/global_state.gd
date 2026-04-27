@@ -7,6 +7,11 @@ const NO_VERSION_NAME = "0.0.0"
 static var current : GlobalStateData
 static var current_version : String
 
+static func _ensure_open() -> void:
+	if current is GlobalStateData:
+		return
+	open()
+
 static func _log_opened() -> void:
 	if current is GlobalStateData:
 		current.last_unix_time_opened = int(Time.get_unix_time_from_system())
@@ -37,14 +42,17 @@ static func save() -> void:
 		ResourceSaver.save(current, SAVE_STATE_PATH)
 
 static func has_state(state_key : String) -> bool:
+	_ensure_open()
 	if current is not GlobalStateData: return false
 	return current.has_state(state_key)
 
 static func get_or_create_state(state_key : String, state_type_path : String) -> Resource:
+	_ensure_open()
 	if current is not GlobalStateData: return
 	return current.get_or_create_state(state_key, state_type_path)
 
 static func reset() -> void:
+	_ensure_open()
 	if current is not GlobalStateData: return
 	current.states.clear()
 	save()

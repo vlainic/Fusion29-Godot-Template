@@ -72,9 +72,8 @@ func _handle_cancel_input() -> void:
 	else:
 		super._handle_cancel_input()
 
-func show() -> void:
-	super.show()
-	if Input.is_action_pressed("ui_cancel"):
+func _on_visibility_changed() -> void:
+	if visible and Input.is_action_pressed("ui_cancel"):
 		_ignore_first_cancel = true
 
 func _refresh_exit_button() -> void:

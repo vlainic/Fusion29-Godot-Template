@@ -13,7 +13,7 @@
 
 ## Enabled Plugins (`[editor_plugins]`)
 
-- `res://addons/maaacks_game_template/plugin.cfg` — Maaack’s Godot Game Template (menus, options, loaders, helpers).
+- `res://scenes/runtime_template/plugin.cfg` — Maaack’s Godot Game Template (menus, options, loaders, helpers).
 - `res://addons/ggt-core/plugin.cfg` — GGT core utilities (scenes history, transitions, progress, multithread loader).
 - `res://addons/ggt-debug-shortcuts/plugin.cfg` — debug shortcuts (restart, pause, quit, speedup, step frame).
 

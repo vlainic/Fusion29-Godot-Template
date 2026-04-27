@@ -71,9 +71,9 @@ func _unhandled_input(event : InputEvent) -> void:
 func _on_close_button_pressed() -> void:
 	close()
 
-func show() -> void:
-	super.show()
-	opened.emit()
+func _on_visibility_changed() -> void:
+	if visible:
+		opened.emit()
 
 func _exit_tree():
 	if Engine.is_editor_hint(): return

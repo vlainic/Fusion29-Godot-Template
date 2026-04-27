@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bk80fxrac0p3i"]
 
-[ext_resource type="PackedScene" uid="uid://sikc02ddepyt" path="res://scenes/runtime_template/base/nodes/opening/opening.tscn" id="1_ke3tw"]
+[ext_resource type="PackedScene" uid="uid://sikc02ddepyt" path="res://scenes/base/opening/opening.tscn" id="1_ke3tw"]
 [ext_resource type="Texture2D" uid="uid://bjfydt30381yc" path="res://assets/fusion29/logolo_ingame.png" id="2_yhkvs"]
 
 [node name="Opening" unique_id=684202726 instance=ExtResource("1_ke3tw")]

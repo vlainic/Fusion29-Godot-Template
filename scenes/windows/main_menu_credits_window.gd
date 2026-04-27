@@ -1,5 +1,5 @@
 @tool
-extends "res://scenes/runtime_template/base/nodes/windows/overlaid_window_scene_container.gd"
+extends "res://scenes/base/windows/overlaid_window_scene_container.gd"
 
 func _ready() -> void:
 	super._ready()

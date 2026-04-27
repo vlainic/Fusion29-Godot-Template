@@ -1,5 +1,5 @@
 @tool
-extends "res://scenes/runtime_template/base/nodes/windows/overlaid_window.gd"
+extends "res://scenes/base/windows/overlaid_window.gd"
 
 const DEFAULT_MAIN_MENU_SCENE_PATH := "res://scenes/menus/main_menu/main_menu.tscn"
 

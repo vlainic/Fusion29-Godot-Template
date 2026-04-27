@@ -2,7 +2,7 @@ extends Control
 ## Scene for displaying opening logos, placards, or other images before a game.
 
 ## Defines the path to the next scene.
-## Will attempt to read from AppConfig if left empty.
+## Will attempt to read from GameConfig if left empty.
 @export_file("*.tscn") var next_scene_path : String
 ## The list of images to show in the opening sequence.
 @export var images : Array[Texture2D]
@@ -26,20 +26,14 @@ var next_image_index : int = 0
 
 func get_next_scene_path() -> String:
 	if next_scene_path.is_empty():
-		return AppConfig.main_menu_scene_path
+		return GameConfig.main_menu_scene_path
 	return next_scene_path
 
-func _on_scene_loaded() -> void:
-		SceneLoader.change_scene_to_resource()
-
 func _load_next_scene() -> void:
-	var status = SceneLoader.get_status()
-	if status == ResourceLoader.THREAD_LOAD_LOADED:
-		_on_scene_loaded()
-	elif show_loading_screen:
-		SceneLoader.change_scene_to_loading_screen()
-	elif not SceneLoader.scene_loaded.is_connected(_on_scene_loaded):
-		SceneLoader.scene_loaded.connect(_on_scene_loaded, CONNECT_ONE_SHOT)
+	var scene_path := get_next_scene_path()
+	if scene_path.is_empty():
+		return
+	get_tree().change_scene_to_file(scene_path)
 
 func _add_textures_to_container(textures : Array[Texture2D]) -> void:
 	for texture in textures:
@@ -115,6 +109,5 @@ func _show_next_image(animated : bool = true) -> void:
 	_wait_and_fade_out(texture_rect)
 
 func _ready() -> void:
-	SceneLoader.load_scene(get_next_scene_path(), true)
 	_add_textures_to_container(images)
 	_transition_in()

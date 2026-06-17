@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://c80lb71anlwen"]
+
+[ext_resource type="Script" path="res://scenes/base/tooltip/tooltip.gd" id="1_tekg5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bnvxh"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.745098, 0.694118, 0.580392, 0.784314)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Tooltip" type="PanelContainer"]
+top_level = true
+z_index = 15
+custom_minimum_size = Vector2(100, 50)
+offset_right = 100.0
+offset_bottom = 50.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bnvxh")
+script = ExtResource("1_tekg5")
+
+[node name="Content" type="RichTextLabel" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[b]Title[/b]
+
+Tooltip text"
+fit_content = true
+autowrap_mode = 0
+
+[node name="DelayTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true

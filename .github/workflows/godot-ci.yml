@@ -83,25 +83,29 @@ jobs:
         with:
           name: HTML5
           path: /home/runner/.local/share/godot/archives/HTML5.zip
+          retention-days: 1
 
       - name: Upload Linux
         uses: actions/upload-artifact@v4
         with:
           name: LinuxX11
           path: /home/runner/.local/share/godot/archives/LinuxX11.zip
-
+          retention-days: 1
+          
       - name: Upload Windows
         uses: actions/upload-artifact@v4
         with:
           name: Windows
           path: /home/runner/.local/share/godot/archives/Windows.zip
-
+          retention-days: 1
+          
       - name: Upload macOS
         uses: actions/upload-artifact@v4
         with:
           name: macOS
           path: /home/runner/.local/share/godot/archives/macOS.zip
-
+          retention-days: 1
+          
   # Jobs 3-6: deploy each platform artifact to itch.io (prod branch only).
   deploy-to-itchio-linux:
     runs-on: ubuntu-latest

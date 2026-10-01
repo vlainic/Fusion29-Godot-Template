@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "command": "python3 .cursor/hooks/gate_large_read.py",
+        "matcher": "Read",
+        "timeout": 10,
+        "failClosed": false
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "python3 .cursor/hooks/gate_large_read.py",
+        "matcher": "cat |head |tail |less |more |bat |sed ",
+        "timeout": 10,
+        "failClosed": false
+      }
+    ]
+  }
+}
